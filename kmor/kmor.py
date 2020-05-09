@@ -14,7 +14,7 @@ def kmor(X, k, y=3, nc0=0.1, gamma = 10**-6, max_iteration = 100):
 
     def calculate_U(X):
         def closest(p):
-            return np.argmin(np.linalg.norm(Z - p))
+            return np.argmin(np.linalg.norm(Z - p, axis=1))
         return np.apply_along_axis(closest, 1, X)
 
     outliers = np.array([])
@@ -35,11 +35,9 @@ def kmor(X, k, y=3, nc0=0.1, gamma = 10**-6, max_iteration = 100):
         U = calculate_U(X)
 
         # Update Z (Theorem 3)
+        is_outlier = np.isin(U, outliers)
         def mean_group(i):
-            if outliers.size == 0:
-                x = X[U == i]
-            else:
-                x = X[U == i][~outliers]
+            x = X[np.logical_and(U == i, ~is_outlier)]
             # Empty group
             if x.size == 0:
                 x = X[np.random.choice(n, 1)]
