@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='kmor',
-    version='1.0.6',
+    version='1.0.7',
     description='K-means clustering with outlier removal numpy implementation',
     author='Sunho Kim',
     author_email='ksunhokim123@naver.com',
